@@ -1,74 +1,111 @@
-# See 'doc/actions.md' for description of available actions which
-# may be assigned to keys. Comments here describe only configuration
-# file format itself.
+# HARDWARE CONFIGURATION
+# ----------------------
+# Verify your Vendor/Product ID if this doesn't work.
+# Common IDs: 0x1189:0x8890, 0x1189:0x8842
+vendor_id: 0x1189
+product_id: 0x8890
 
-# Normal keyboard orientation is when
-# buttons are on the left side and knobs are on the right.
-# However, you may want to use the keyboard in another orientation.
-# To avoid remapping button positions in your head, just set it here.
-# Possible values are:
-#   (horizontal)
-#   - 'normal': buttons on the left, knobs on the right
-#   - 'upsidedown': buttons on the right, knobs on the left
-#   (vertical)
-#   - 'clockwise': buttons on the top, knobs on the bottom
-#   - 'counterclockwise': buttons on the bottom, knobs on the top
-orientation: normal
+# MAC KEY MAPPING LEGEND
+# ----------------------
+# cmd   = Command (⌘)
+# opt   = Option (⌥)
+# ctrl  = Control (^)
+# shift = Shift (⇧)
 
-# Different keyboard models have different numbers of buttons and knobs.
-# Set it here for proper handling.
-# Count rows and columns with the keyboard in normal orientation (knobs on the right)
+# ORIENTATION
+# -----------
+# 'counterclockwise' puts the knobs at the TOP and buttons at the BOTTOM.
+orientation: counterclockwise
+
+# NATIVE MATRIX
 rows: 3
 columns: 4
 knobs: 2
 
-# Layers are sets of alternative key mappings.
-# The current layer is changed using a button on the side of the keyboard
-# and displayed with LEDs on top (only for the moment of changing).
-# All keyboards I saw had three layers, but I suppose other variants exist.
 layers:
+  # =================================================================
+  # LAYER 1: PRODUCTIVITY (The "Work" Layer)
+  # =================================================================
   - buttons:
-      # Array of buttons.
-      # In horizontal orientations it's `rows` rows `columns` buttons each.
-      # In vertical: `columns` rows `rows` buttons each.
-      - ["a", "ctrl-a", "alt-shift", "alt-ctrl,ctrl-b"]
-      - ["e", "f", "g", "h"]
-      - ["<100>", "j", "k", "l"]
-    knobs:
-      # Knobs are listed from left to right if horizontal.
-      # Knobs are listed from top to bottom if vertical.
-      # Knobs can be rotated counter-clockwise (ccw) or clockwise (cw)
-      # and pressed down.
-      - ccw: "wheelup"
-        press: "click"
-        cw: "wheeldown"
-      - ccw: "shift-wheelup"
-        press: "shift-click"
-        cw: "shift-wheeldown"
+      # Visual Row 1 (Top)
+      - ["cmd-c",         "cmd-v",         "cmd-x"]        # Copy, Paste, Cut
+      # Visual Row 2
+      - ["cmd-z",         "cmd-shift-z",   "cmd-f"]        # Undo, Redo, Find
+      # Visual Row 3
+      - ["cmd-tab",       "cmd-w",         "cmd-n"]        # Switch App, Close Tab, New Window
+      # Visual Row 4 (Bottom)
+      - ["shift-cmd-4",   "shift-cmd-5",   "cmd-grave"]    # Screenshot, Record, Switch Window (Cmd+`)
 
-  - buttons:
-      # Mouse events
-      - ["click", "click(middle)", "click+rclick", "ctrl-mclick"]
-      - ["move(0,10)", "alt-drag(right,10,0)", "ctrl-move(5,5)", "ctrl-wheelup"]
-      - ["alt-wheel(1)", "ctrl-click", "wheelup", "wheelup"]
     knobs:
-      - ccw: "left"
-        press: "enter"
-        cw: "right"
-      - ccw: "ctrl-left"
-        press: "ctrl-enter"
-        cw: "ctrl-right"
-
-  - buttons:
-      # Multimedia commands are supported but
-      # cannot be mixed with normal keys and modifiers.
-      - ["play", "prev", "next", "mute"]
-      - ["2", "3", "4", "5"]
-      - ["6", "7", "8", "9"]
-    knobs:
+      # Left Knob - TAB SWITCHING
+      - ccw: "ctrl-shift-tab"    # Previous Tab
+        press: "cmd-t"           # New Tab (Cmd+T)
+        cw: "ctrl-tab"           # Next Tab
+       
+      # Right Knob (Top Right) - MUTE ON PRESS
       - ccw: "volumedown"
         press: "mute"
         cw: "volumeup"
-      - ccw: "d"
-        press: "e"
-        cw: "f"
+
+  # =================================================================
+  # LAYER 2: USEFUL WEBSITES
+  # =================================================================
+  # STRATEGY: Nuclear Option (Ctrl+Cmd+Opt+Letters).
+  # ACTION: Map these in Shortcuts App.
+  # We use Ctrl + Cmd + Opt + Letters (A-I) to bypass Shortcut App limitations.
+  # NOTE: Using 'opt' instead of 'alt' as requested.
+  - buttons:
+      # Visual Row 1 - LLMs
+      # Gemini (A), Glean (B), ChatGPT (C)
+      - ["ctrl-cmd-opt-a", "ctrl-cmd-opt-b", "ctrl-cmd-opt-c"]
+       
+      # Visual Row 2 - Work / Jira
+      # Jira Board (D), Jira Form (E), Confluence (F)
+      - ["ctrl-cmd-opt-d", "ctrl-cmd-opt-e", "ctrl-cmd-opt-f"]
+       
+      # Visual Row 3 - Personal / Utility
+      # Calendar (G), Mail (H), Ring (I)
+      - ["ctrl-cmd-opt-g", "ctrl-cmd-opt-h", "ctrl-cmd-opt-i"]
+       
+      # Visual Row 4 - TBD 
+      - ["enter",        "enter",         "enter"]
+
+    knobs:
+      # Left Knob - TAB SWITCHING
+      - ccw: "ctrl-shift-tab"    # Previous Tab
+        press: "cmd-t"           # New Tab (Cmd+T)
+        cw: "ctrl-tab"           # Next Tab
+       
+      # Right Knob (Top Right) - MUTE ON PRESS
+      - ccw: "volumedown"
+        press: "mute"
+        cw: "volumeup"
+
+  # =================================================================
+  # LAYER 3: PROGRAM COMMANDS & PROMPTS
+  # =================================================================
+  - buttons:
+      # Visual Row 1 - Slack Commands
+      - ["cmd-k",         "cmd-shift-a",  "cmd-shift-l"]
+       
+      # Visual Row 2 - G-Suite / Editing
+      - ["cmd-b",         "cmd-i",        "cmd-k"]
+       
+      # Visual Row 3 - LLM Prompts (Triggers)
+      # Replaced macro text with F-Keys because of 5-char limit.
+      # F22 -> "role: ", F23 -> "context: ", F24 -> "task: "
+      - ["f22",           "f23",          "f24"]
+       
+      # Visual Row 4 - Utilities
+      - ["ctrl-cmd-q",    "enter",        "delete"]        # Lock Screen
+
+    knobs:
+      # Left Knob - TAB SWITCHING
+      - ccw: "ctrl-shift-tab"    # Previous Tab
+        press: "cmd-t"           # New Tab (Cmd+T)
+        cw: "ctrl-tab"           # Next Tab
+       
+      # Right Knob (Top Right) - MUTE ON PRESS
+      - ccw: "volumedown"
+        press: "mute"
+        cw: "volumeup"
